@@ -24,7 +24,7 @@
             android:name="com.rxstudios.moneyguard.fragments.MoneyEarnSpendList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout="@layout/earnspendlist_layout" />
+            tools:layout="@layout/adapterlayout_earnspendlist" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -39,7 +39,7 @@ public class MoneyEarnSpendList extends Fragment {
         //Adapter
         MainActivity mainActivity = (MainActivity) getActivity();
         earnSpendList = mainActivity.getEarnSpendList();
-        MoneyEarnSpendListAdapter moneyEarnSpendListAdapter = new MoneyEarnSpendListAdapter(this.getContext(), R.layout.earnspendlist_layout, earnSpendList);
+        MoneyEarnSpendListAdapter moneyEarnSpendListAdapter = new MoneyEarnSpendListAdapter(this.getContext(), R.layout.adapterlayout_earnspendlist, earnSpendList);
         moneyEarnSpendList.setAdapter(moneyEarnSpendListAdapter);
         moneyEarnSpendListAdapter.notifyDataSetChanged();
     }

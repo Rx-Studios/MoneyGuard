@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         //Check if logged in
         if(firebaseUserAuth.getCurrentUser()==null){
             //TODO Login
-
+            startActivity(new Intent(this, Login_Register_Activity.class));
         }
     }
 
