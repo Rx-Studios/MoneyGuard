@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "591115682018",
+    "firebase_url": "https://rxstudios-moneyguard.firebaseio.com",
+    "project_id": "rxstudios-moneyguard",
+    "storage_bucket": "rxstudios-moneyguard.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591115682018:android:ffd381c5cf4523926b5ebb",
+        "android_client_info": {
+          "package_name": "com.rxstudios.moneyguard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591115682018-f5hvfogaqqcf5hvbflqu2lqvqe84vifq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXxhpmIGVFjYSfyLPj5hdeMvrt-zQJVaM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591115682018-f5hvfogaqqcf5hvbflqu2lqvqe84vifq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

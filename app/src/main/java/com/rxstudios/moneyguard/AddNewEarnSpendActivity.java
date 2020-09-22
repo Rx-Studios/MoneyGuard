@@ -10,6 +10,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.rxstudios.moneyguard.beans.EarnSpend;
 import com.rxstudios.moneyguard.enums.Currency;
 
@@ -55,10 +56,11 @@ public class AddNewEarnSpendActivity extends AppCompatActivity {
                 earnSpend.setSource(source.getText().toString());
 
                 //TO Json
-                String result = "";
+                String result = new Gson().toJson(earnSpend);
                 Intent intent = new Intent();
                 intent.putExtra("result", result);
-                //return result
+                setResult(1, intent);
+                finishActivity(001);
             }
         });
     }
