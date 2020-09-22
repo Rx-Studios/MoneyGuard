@@ -1,10 +1,13 @@
 package com.rxstudios.moneyguard;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -12,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,11 +25,13 @@ public class Login_Register_Activity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
+        linearLayout = findViewById(R.id.login_register_activity_general);
         generateLoginOrRegisterAlert();
     }
 
@@ -68,11 +74,15 @@ public class Login_Register_Activity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if(task.isSuccessful()){
-                                            Log.d("Login_Register_Activity", "onComplete: Register successful");
-                                            //TODO Notification
+                                            Log.d("Login_Register_Activity", "DevMessage: onComplete: Register successful");
+                                            setResult(901);
+                                            finish();
                                         }else{
-                                            Log.d("Login_Register_Activity", "onComplete: Register successful");
-                                            //TODO Notification
+                                            Log.d("Login_Register_Activity", "DevMessage: onComplete: Register successful");
+                                            Snackbar.make(linearLayout, "Login not successful! " + task.getException().toString().split("Exception: ")[1], Snackbar.LENGTH_SHORT)
+                                                    .setBackgroundTint(Color.RED)
+                                                    .setTextColor(Color.WHITE)
+                                                    .show();
                                         }
                                     }
                                 });
@@ -86,6 +96,7 @@ public class Login_Register_Activity extends AppCompatActivity {
                     }
                 })
                 .setView(loginView)
+                .setCancelable(false)
                 .create()
                 .show();
     }
@@ -102,7 +113,7 @@ public class Login_Register_Activity extends AppCompatActivity {
                         EditText passwordEditText = registerView.findViewById(R.id.alert_register_password_edittext);
                         EditText password2EditText = registerView.findViewById(R.id.alert_register_password2_edittext);
                         //TODO password2EditText EditWatcher
-                        if (passwordEditText.getText().equals(password2EditText.getText())) {
+                        if (passwordEditText.getText().toString().equals(password2EditText.getText().toString())) {
                             firebaseAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                         @Override
@@ -116,18 +127,29 @@ public class Login_Register_Activity extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if(task.isSuccessful()){
-                                                                    Log.d("Login_Register_Activity", "onComplete: Register successful");
-                                                                    //TODO Notification
+                                                                    Log.d("Login_Register_Activity", "DevMessage: onComplete: Register successful");
+                                                                    setResult(911);
+                                                                    finish();
                                                                 }
                                                             }
                                                         });
                                             }else{
-                                                Log.d("Login_Register_Activity", "onComplete: Register not successful");
-                                                //TODO Notification
+                                                Log.d("Login_Register_Activity", "DevMessage: onComplete: Register not successful: " + task.getException());
+                                                Snackbar.make(linearLayout, "Register not successful! " + task.getException().toString().split("Exception: ")[1], Snackbar.LENGTH_SHORT)
+                                                        .setBackgroundTint(Color.RED)
+                                                        .setTextColor(Color.WHITE)
+                                                        .show();
                                             }
                                         }
                                     }
                                     );
+                        }else{
+                            Log.d("Login_Register_Activity", "DevMessage: onClick: The passwords weren't the same");
+                            Log.d("Login_Register_Activity", "DevMessage: onComplete: Register not successful: 2 different passwords were entered");
+                            Snackbar.make(linearLayout, "Register not successful! Register not successful: 2 different passwords were entered", Snackbar.LENGTH_SHORT)
+                                    .setBackgroundTint(Color.RED)
+                                    .setTextColor(Color.WHITE)
+                                    .show();
                         }
                     }
                 })
@@ -139,6 +161,7 @@ public class Login_Register_Activity extends AppCompatActivity {
                     }
                 })
                 .setView(registerView)
+                .setCancelable(false)
                 .create()
                 .show();
     }

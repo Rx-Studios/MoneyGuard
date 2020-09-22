@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
-            android:text="Passwort" />
+            android:text="Password (at least 6 characters)" />
 
         <EditText
             android:id="@+id/alert_register_password_edittext"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
-            android:text="Passwort" />
+            android:text="Password" />
 
         <EditText
             android:id="@+id/alert_register_password2_edittext"
@@ -82,12 +82,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/alert_register_done_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register" />
-    </LinearLayout>
+        android:orientation="vertical"/>
 </FrameLayout>

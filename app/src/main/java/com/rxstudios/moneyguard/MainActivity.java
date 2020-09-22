@@ -1,17 +1,17 @@
 package com.rxstudios.moneyguard;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.rxstudios.moneyguard.beans.EarnSpend;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     //User Authentication
     private FirebaseAuth firebaseUserAuth = FirebaseAuth.getInstance();
-
+    RelativeLayout relativeLayout;
 
     public List<EarnSpend> getEarnSpendList() {
         return earnSpendList;
@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         //Check if logged in
         if(firebaseUserAuth.getCurrentUser()==null){
             //TODO Login
-            startActivity(new Intent(this, Login_Register_Activity.class));
+            startActivityForResult(new Intent(this, Login_Register_Activity.class), 002);
+        }else{
+            Log.d("MainActivity", "DevMessage: onCreate: User is already logged in!");
         }
     }
 
@@ -64,15 +66,48 @@ public class MainActivity extends AppCompatActivity {
          * Resultcodes:
          * 1: ok
          *
+         * 901: Login successful
+         * 901: Login not successful and went out of login activity
+         * 911: Register successful
+         * 912: Register not successful and went out of login activity
+         *
          * Requestcodes:
          * 001: Create new EarnSpend
+         * 002: Login
          */
-        switch(requestCode){
-            case 1:
+        switch(requestCode) {
+            case 001:
                 //Adds the new EarnSpend item to the general list
-                earnSpendList.add(new Gson().fromJson(data.getStringExtra("result"),EarnSpend.class));
+                earnSpendList.add(new Gson().fromJson(data.getStringExtra("result"), EarnSpend.class));
+                break;
+            case 002:
+                relativeLayout = findViewById(R.id.activity_main_general);
+                switch (resultCode) {
+                    case 901:
+                        Snackbar.make(relativeLayout, "Login successful!", Snackbar.LENGTH_SHORT)
+                                .setBackgroundTint(Color.rgb(97,182,62))
+                                .setTextColor(Color.WHITE)
+                                .show();
+                        break;
+                    case 902:
+                        Snackbar.make(relativeLayout, "ERROR: Login not successful!", Snackbar.LENGTH_SHORT)
+                                .setBackgroundTint(Color.RED)
+                                .setTextColor(Color.WHITE)
+                                .show();
+                        break;
+                    case 911:
+                        Snackbar.make(relativeLayout, "Register successful!", Snackbar.LENGTH_SHORT)
+                                .setBackgroundTint(Color.rgb(97,182,62))
+                                .setTextColor(Color.WHITE)
+                                .show();
+                        break;
+                    case 912:
+                        Snackbar.make(relativeLayout, "Register not successful!", Snackbar.LENGTH_SHORT)
+                                .setBackgroundTint(Color.GREEN)
+                                .setTextColor(Color.WHITE)
+                                .show();
+                        break;
+                }
         }
     }
-
-
 }
