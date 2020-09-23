@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Check if logged in
-        if(firebaseUserAuth.getCurrentUser()==null){
+        if (firebaseUserAuth.getCurrentUser() == null) {
             //TODO Login
             startActivityForResult(new Intent(this, Login_Register_Activity.class), 002);
-        }else{
+        } else {
             Log.d("MainActivity", "DevMessage: onCreate: User is already logged in!");
         }
     }
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
          * 001: Create new EarnSpend
          * 002: Login
          */
-        switch(requestCode) {
+        switch (requestCode) {
             case 001:
                 //Adds the new EarnSpend item to the general list
                 earnSpendList.add(new Gson().fromJson(data.getStringExtra("result"), EarnSpend.class));
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (resultCode) {
                     case 901:
                         Snackbar.make(relativeLayout, "Login successful!", Snackbar.LENGTH_SHORT)
-                                .setBackgroundTint(Color.rgb(97,182,62))
+                                .setBackgroundTint(Color.rgb(97, 182, 62))
                                 .setTextColor(Color.WHITE)
                                 .show();
                         break;
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 911:
                         Snackbar.make(relativeLayout, "Register successful!", Snackbar.LENGTH_SHORT)
-                                .setBackgroundTint(Color.rgb(97,182,62))
+                                .setBackgroundTint(Color.rgb(97, 182, 62))
                                 .setTextColor(Color.WHITE)
                                 .show();
                         break;
@@ -109,5 +112,22 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.activity_main_menu_logout:
+                firebaseUserAuth.signOut();
+                startActivityForResult(new Intent(this, Login_Register_Activity.class), 002);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

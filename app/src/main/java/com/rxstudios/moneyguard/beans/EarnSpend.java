@@ -1,5 +1,6 @@
 package com.rxstudios.moneyguard.beans;
 
+import com.rxstudios.moneyguard.enums.Category;
 import com.rxstudios.moneyguard.enums.Currency;
 import com.rxstudios.moneyguard.enums.Type;
 
@@ -8,15 +9,17 @@ public class EarnSpend {
     double amount;
     Currency currency;
     String source;
+    Category category;
 
-    public EarnSpend() {
+    public Category getCategory() {
+        return category;
     }
 
-    public EarnSpend(Type type, double amount, Currency currency, String source) {
-        this.type = type;
-        this.amount = amount;
-        this.currency = currency;
-        this.source = source;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public EarnSpend() {
     }
 
     public Type getType() {

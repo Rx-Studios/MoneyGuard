@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.rxstudios.moneyguard.beans.EarnSpend;
+import com.rxstudios.moneyguard.enums.Category;
 import com.rxstudios.moneyguard.enums.Currency;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class AddNewEarnSpendActivity extends AppCompatActivity {
     EditText source;
     EditText amount;
     Spinner currency;
+    Spinner category;
     Button done;
 
     @Override
@@ -36,15 +38,23 @@ public class AddNewEarnSpendActivity extends AppCompatActivity {
         source = findViewById(R.id.add_new_earn_spend_source_EditText);
         amount = findViewById(R.id.add_new_earn_spend_amount_EditText);
         currency = findViewById(R.id.add_new_earn_spend_currency_spinner);
+        category = findViewById(R.id.add_new_earn_spend_category_spinner);
         List<CharSequence> currencyList = new ArrayList<>();
         for (int i = 0; i < Currency.values().length; i++) {
             currencyList.add(Currency.values()[i].toString());
         }
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, currencyList);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        currency.setAdapter(adapter);
+        ArrayAdapter<CharSequence> currencyAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, currencyList);
+        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currency.setAdapter(currencyAdapter);
+
+        List<CharSequence> categoryList = new ArrayList<>();
+        for (int i = 0; i < Category.values().length; i++) {
+            categoryList.add(Currency.values()[i].toString());
+        }
+        ArrayAdapter<CharSequence> categoryAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, currencyList);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currency.setAdapter(categoryAdapter);
+
 
         done = findViewById(R.id.add_new_earn_spend_done_button);
         done.setOnClickListener(new View.OnClickListener() {
@@ -56,11 +66,12 @@ public class AddNewEarnSpendActivity extends AppCompatActivity {
                 earnSpend.setSource(source.getText().toString());
 
                 //TO Json
+                Gson gson = new Gson();
                 String result = new Gson().toJson(earnSpend);
                 Intent intent = new Intent();
                 intent.putExtra("result", result);
                 setResult(1, intent);
-                finishActivity(001);
+                finish();
             }
         });
     }
